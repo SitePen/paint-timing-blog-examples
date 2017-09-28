@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Reporting to Node.js</title>
+	<script>
+		const observer = new window.PerformanceObserver(list => {
+			list.getEntries().forEach(({name, startTime}) => {
+				console.log({name, startTime});
+
+				// Need to report to a server here
+				const data = {
+					name,
+					startTime
+				};
+
+				navigator.sendBeacon('http://127.0.0.1:3000', JSON.stringify(data));
+			});
+		});
+
+		observer.observe({
+			entryTypes: ['paint']
+		});
+	</script>
+</head>
+<body>
+
+	<p>Hi there</p>
+
+</body>
+</html>
